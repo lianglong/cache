@@ -49,11 +49,29 @@ type Cache interface {
 	SMembers(ctx context.Context, key string) ([]string, error)
 	SRem(ctx context.Context, key string, members ...interface{}) error
 
+	// Pub/Sub 操作
+	Publish(ctx context.Context, channel string, message string) error
+	Subscribe(ctx context.Context, channels ...string) (PubSub, error)
+
 	// 管理操作
 	Ping(ctx context.Context) error                             // 新增：健康检查
 	FlushDB(ctx context.Context) error                          // 改名：原 Clear，更明确
 	Keys(ctx context.Context, pattern string) ([]string, error) // 新增：查找键（谨慎使用）
 	Close() error
+}
+
+// PubSub 发布订阅接口
+type PubSub interface {
+	// Channel 返回接收消息的通道
+	Channel() <-chan *Message
+	// Close 关闭订阅
+	Close() error
+}
+
+// Message Pub/Sub 消息
+type Message struct {
+	Channel string // 频道名称
+	Payload string // 消息内容
 }
 
 // StringCache 简化版接口（如果只需要字符串缓存）

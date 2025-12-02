@@ -222,6 +222,18 @@ func (n *Namespace) SRem(ctx context.Context, key string, members ...interface{}
 }
 
 // ============================================
+// Pub/Sub 操作（直接透传，不加 namespace 前缀）
+// ============================================
+
+func (n *Namespace) Publish(ctx context.Context, channel string, message string) error {
+	return n.cache.Publish(ctx, channel, message)
+}
+
+func (n *Namespace) Subscribe(ctx context.Context, channels ...string) (PubSub, error) {
+	return n.cache.Subscribe(ctx, channels...)
+}
+
+// ============================================
 // 管理操作
 // ============================================
 
