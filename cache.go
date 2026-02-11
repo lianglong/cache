@@ -58,6 +58,11 @@ type Cache interface {
 	FlushDB(ctx context.Context) error                          // 改名：原 Clear，更明确
 	Keys(ctx context.Context, pattern string) ([]string, error) // 新增：查找键（谨慎使用）
 	Close() error
+
+	// Eval 执行 Lua 脚本
+	Eval(ctx context.Context, script string, keys []string, args ...interface{}) (interface{}, error)
+	// EvalSha 通过 SHA1 哈希执行预加载的 Lua 脚本
+	EvalSha(ctx context.Context, sha1 string, keys []string, args ...interface{}) (interface{}, error)
 }
 
 // PubSub 发布订阅接口

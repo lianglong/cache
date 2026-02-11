@@ -295,6 +295,14 @@ func (n *Namespace) Close() error {
 	return n.cache.Close()
 }
 
+func (n *Namespace) Eval(ctx context.Context, script string, keys []string, args ...interface{}) (interface{}, error) {
+	return n.cache.Eval(ctx, script, n.keys(keys...), args...)
+}
+
+func (n *Namespace) EvalSha(ctx context.Context, sha1 string, keys []string, args ...interface{}) (interface{}, error) {
+	return n.cache.EvalSha(ctx, sha1, n.keys(keys...), args...)
+}
+
 // ============================================
 // 辅助方法
 // ============================================
