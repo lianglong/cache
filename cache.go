@@ -53,13 +53,6 @@ type Cache interface {
 	Publish(ctx context.Context, channel string, message string) error
 	Subscribe(ctx context.Context, channels ...string) (PubSub, error)
 
-	// Lua 脚本操作
-	Eval(ctx context.Context, script string, keys []string, args ...interface{}) (interface{}, error)
-	EvalSha(ctx context.Context, sha1 string, keys []string, args ...interface{}) (interface{}, error)
-	ScriptLoad(ctx context.Context, script string) (string, error)
-	ScriptExists(ctx context.Context, sha1s ...string) ([]bool, error)
-	ScriptFlush(ctx context.Context) error
-
 	// 管理操作
 	Ping(ctx context.Context) error                             // 新增：健康检查
 	FlushDB(ctx context.Context) error                          // 改名：原 Clear，更明确
