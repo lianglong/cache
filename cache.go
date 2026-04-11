@@ -49,6 +49,11 @@ type Cache interface {
 	SMembers(ctx context.Context, key string) ([]string, error)
 	SRem(ctx context.Context, key string, members ...interface{}) error
 
+	ZAdd(ctx context.Context, key string, score float64, member string) error
+	ZRem(ctx context.Context, key string, members ...string) error
+	ZRangeByScore(ctx context.Context, key string, min, max float64) ([]string, error)
+	ZRemRangeByScore(ctx context.Context, key string, min, max float64) error
+
 	// Pub/Sub 操作
 	Publish(ctx context.Context, channel string, message string) error
 	Subscribe(ctx context.Context, channels ...string) (PubSub, error)
